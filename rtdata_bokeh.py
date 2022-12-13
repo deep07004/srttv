@@ -14,6 +14,7 @@ def handle_data(trace):
 def update():
     end = UTCDateTime()
     start = end - 300
+    trace_present =[]
     if len(tr) > 0:
         tr.trim(start,end)
         for trace in tr:
@@ -24,21 +25,18 @@ def update():
             tt = sorted([ st + timedelta(seconds =(j * trace.stats.delta)) for j in range(trace.stats.npts)])
             data = trace.data
             new_data = {'x':tt, 'y':data}
-            sources[IDs[trace.id]].stream(new_data,30000)
+            sources[IDs[trace.id]].stream(new_data,100000)
+            trace_present.append(trace.id)
         tr.clear()
-#ii = int(np.floor(end - start)/trace.stats.delta)
-#t1 = trace.stats.starttime
-#t2 = trace.stats.endtime
-#if t1 < start:
-#    continue
-#tt = [start+ i*trace.stats.delta for i in range(ii)]
-#data = [np.nan for i in range(ii)]
-#for i in range(len(tt)):
-#    if tt[i]>= t1:
-#        jj = i
-#        break
-#data[jj:jj+trace.stats.npts] = trace.data
-#ttm = [t.datetime for t in tt]
+    #tt = [start+ i for i in range(300)]
+    #ttm = [t.datetime for t in tt]
+    #data = [np.nan for i in range(300)]
+    #for trace in channels:
+    #    if trace not in trace_present:
+    #        new_data = {'x':ttm, 'y':data}
+    #        sources[IDs[trace]].stream(new_data,3000)
+
+
 
 tr = Stream()
 client = sl.create_client('rtserve.iris.washington.edu', on_data=handle_data)
