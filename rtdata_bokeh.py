@@ -107,7 +107,7 @@ for i in [0,-1]:
         months = date_pattern,
         years =  date_pattern
     )
-grid = gridplot(figures,merge_tools=True, ncols=1,sizing_mode= "fixed")
+grid = gridplot(figures,merge_tools=True, ncols=1,sizing_mode= "scale_both")
 GridBox(spacing=0)
 curdoc().add_root(grid)
 curdoc().add_periodic_callback(update,1000)
