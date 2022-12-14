@@ -19,7 +19,7 @@ def update():
         tr.trim(start,end)
         for trace in tr:
             t1 = trace.stats.starttime
-            rollover = int(420.0/trace.stats.delta)
+            rollover = int(900.0/trace.stats.delta)
             if t1 < start:
                 continue
             ii = 0
@@ -76,9 +76,9 @@ for i in range(len(channels)):
     sources.append(ColumnDataSource(data = dict(x = [], y = [])))
     if i==0:
         figures.append(figure(background_fill_color =bgc,x_axis_location="above",
-        plot_width=1500, plot_height=75))
-    elif i==len(channels):
-        figures.append(figure(background_fill_color =bgc, plot_width=1500, plot_height=75))
+        plot_width=1500, plot_height=72))
+    elif i==len(channels)-1:
+        figures.append(figure(background_fill_color =bgc, x_range=figures[0].x_range,plot_width=1500, plot_height=69))
     else:
         figures.append(figure(x_range=figures[0].x_range, background_fill_color=bgc,
         plot_width=1500, plot_height=25))
@@ -92,7 +92,7 @@ for i in range(len(channels)):
     figures[i].ygrid.visible = False
     figures[i].min_border_left = 0
     figures[i].x_range.follow = "end"
-    figures[i].x_range.follow_interval = 420000 # Should be same as rollover miliseconds
+    figures[i].x_range.follow_interval = 720000 # Should be same as rollover miliseconds
     if not i == 0 or i == len(channels):
         figures[i].min_border = 0
 for i in [0,-1]:
@@ -110,4 +110,4 @@ for i in [0,-1]:
 grid = gridplot(figures,merge_tools=True, ncols=1,sizing_mode= "scale_both")
 GridBox(spacing=0)
 curdoc().add_root(grid)
-curdoc().add_periodic_callback(update,1000)
+curdoc().add_periodic_callback(update,2000)
