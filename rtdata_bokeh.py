@@ -14,6 +14,8 @@ def handle_data(trace):
 def update():
     end = UTCDateTime()
     start = end - 300
+    for f in figures:
+        f.x_range.end = end.datetime
     trace_present =[]
     if len(tr) > 0:
         tr.trim(start,end)
@@ -92,7 +94,9 @@ for i in range(len(channels)):
     figures[i].ygrid.visible = False
     figures[i].min_border_left = 0
     figures[i].x_range.follow = "end"
-    figures[i].x_range.follow_interval = 720000 # Should be same as rollover miliseconds
+    figures[i].x_range.follow_interval = 600000 # Should be same as rollover miliseconds
+    figures[i].x_range.range_padding = 0
+    #figures[i].x_range.only_visible = True
     if not i == 0 or i == len(channels):
         figures[i].min_border = 0
 for i in [0,-1]:
