@@ -13,8 +13,8 @@ def lon2x(a):
   return np.radians(a) * RADIUS
 
 
-#tile_provider = get_provider(xyz.Esri.WorldTerrain)
-tile_provider = get_provider(xyz.Esri.WorldPhysical)
+tile_provider = get_provider(xyz.Esri.WorldTerrain)
+#tile_provider = get_provider(xyz.Esri.WorldPhysical)
 # range bounds supplied in web mercator coordinates
 p = figure(x_range=(lon2x(92), lon2x(93.5)), y_range=(lat2y(4), lat2y(10)),
            x_axis_type="mercator", y_axis_type="mercator")
