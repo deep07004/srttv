@@ -91,7 +91,7 @@ LAT = [lat2y(x) for x in LAT]
 tt = UTCDateTime()
 source = ColumnDataSource(data = dict(x = [], y = [], z = []))
 tile_provider = get_provider(xyz.Esri.WorldTerrain)
-p = figure(plot_width=800, plot_height=600, x_range=(lon2x(65), lon2x(105)), y_range=(lat2y(5), lat2y(35)),
+p = figure(plot_width=800, plot_height=650, x_range=(lon2x(65), lon2x(100)), y_range=(lat2y(5), lat2y(35)),
            x_axis_type="mercator", y_axis_type="mercator")
 p.add_tile(tile_provider)
 cmap = ['#00FFFF', '#00FF00', '#FFFF00', '#FFA500', '#FF0000', '#BEBDB8', '#828282', '#000000']
@@ -100,10 +100,21 @@ latancy_sorted =[' < 20', ' (20,60]', ' (60,180]', ' (180,600]', ' (600,1800]',
 ' (1800,0.5d]',' (0.5d,1d]',' > 1d']
 p.triangle(x='x',y='y',size=14, source=source, legend_field="z", color=factor_cmap("z", cmap, latancy_sorted),
 line_width=0.45,line_color='#000000')
-print(p.legend.items)
 p.legend.background_fill_color='white'
 p.legend.border_line_width = 0.35
 p.legend.border_line_color = 'black'
 p.legend.title = "Latancy in s"
-curdoc().add_root(p)
+
+# Andaman
+p1 = figure(plot_width=200, plot_height=650, x_range=(lon2x(91.5), lon2x(95)), y_range=(lat2y(6.5), lat2y(13.5)),
+           x_axis_type="mercator", y_axis_type="mercator")
+p1.add_tile(tile_provider)
+cmap = ['#00FFFF', '#00FF00', '#FFFF00', '#FFA500', '#FF0000', '#BEBDB8', '#828282', '#000000']
+#latancy_sorted =[' < 20', ' (20,60)', ' > 1d']
+latancy_sorted =[' < 20', ' (20,60]', ' (60,180]', ' (180,600]', ' (600,1800]', 
+' (1800,0.5d]',' (0.5d,1d]',' > 1d']
+p1.triangle(x='x',y='y',size=14, source=source, color=factor_cmap("z", cmap, latancy_sorted),
+line_width=0.45,line_color='#000000')
+grid = gridplot([p,p1],merge_tools=True, ncols=2,sizing_mode= "fixed")
+curdoc().add_root(grid)
 curdoc().add_periodic_callback(update_map,2000)
