@@ -90,7 +90,9 @@ LON = [lon2x(x) for x in LON]
 LAT = [lat2y(x) for x in LAT]
 tt = UTCDateTime()
 source = ColumnDataSource(data = dict(x = [], y = [], z = []))
-tile_provider = get_provider(xyz.Esri.WorldTerrain)
+#xyz.MapTiler.Satellite["key"]  = "NpGj1MyZ7hw1J2ovQAEF"
+#tile_provider = get_provider(xyz.MapTiler.Satellite)
+tile_provider = get_provider(xyz.Esri.WorldPhysical)
 p = figure(plot_width=800, plot_height=650, x_range=(lon2x(65), lon2x(100)), y_range=(lat2y(5), lat2y(35)),
            x_axis_type="mercator", y_axis_type="mercator")
 p.add_tile(tile_provider)
@@ -100,6 +102,8 @@ latancy_sorted =[' < 20', ' (20,60]', ' (60,180]', ' (180,600]', ' (600,1800]',
 ' (1800,0.5d]',' (0.5d,1d]',' > 1d']
 p.triangle(x='x',y='y',size=14, source=source, legend_field="z", color=factor_cmap("z", cmap, latancy_sorted),
 line_width=0.45,line_color='#000000')
+p.xgrid.visible=False
+p.ygrid.visible=False
 p.legend.background_fill_color='white'
 p.legend.border_line_width = 0.35
 p.legend.border_line_color = 'black'
