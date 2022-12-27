@@ -1,0 +1,6 @@
+ROOT: "."
+# station xml, seedlink server and components to get
+Inventory:
+#  - [IN_RTSMN.dataless.xml, rtserve.iris.washington.edu, HHZ]
+  - [IN_RTSMN.dataless.xml, 172.16.4.91:18121, HHZ]
+#  - [Andaman.xml, 172.16.3.244:18003, HNZ] 
